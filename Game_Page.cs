@@ -264,10 +264,10 @@ namespace NDP_Proje
                                 {
                                     //changed = true;
                                     basechanged = true;
-                                 if ((pics[j].AccessibleName == "NewLineUp") || (pics[j].AccessibleName == "End"))
-                                        {
-                                            continue;
-                                        }
+                                    if ((pics[j].AccessibleName == "NewLineUp") || (pics[j].AccessibleName == "End"))
+                                    {
+                                        continue;
+                                    }
                                     // Silinen şekerlerin yerine yeni şekerler ekleniyor
                                     var result_CreateImage = CreateSugarImage();
                                     Image _Image = result_CreateImage.Item1;
@@ -456,4 +456,3 @@ namespace NDP_Proje
         }
     }
 }
-
