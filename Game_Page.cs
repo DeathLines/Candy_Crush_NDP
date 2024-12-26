@@ -22,8 +22,11 @@ namespace NDP_Proje
         private int end_of_per = 0;
         private int start_of_per = 0;
         private bool done;
+        public int[] syntax = { 0, 7, 8, 15, 16, 23, 24, 31, 32, 39, 40, 47 };
+        private string[] colors = { "item_mavi.png", "item_kirmizi.png", "item_sari.png", "item_yesil.png" };
         //private bool changed = true;
         private PictureBox[] pics;
+        string[] imgs = { "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_dikey_roket.png", "item_yatay_roket.png", "item_bomba.png", "item_gokkusagi.png", "item_helicopter.png" };
 
 
         public Game_Page()
@@ -33,7 +36,7 @@ namespace NDP_Proje
 
             Random random = new Random();
             Seker1[] sekerler = new Seker1[36];
-            string[] imgs = { "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_dikey_roket.png", "item_yatay_roket.png", "item_bomba.png", "item_gokkusagi.png", "item_helicopter.png" };
+
 
 
             InitializeComponent();
@@ -47,11 +50,11 @@ namespace NDP_Proje
                 pictureBox43,pictureBox7, pictureBox8, pictureBox9, pictureBox10,pictureBox11, pictureBox12,pictureBox40,
                 pictureBox42,pictureBox1, pictureBox2, pictureBox3, pictureBox4, pictureBox5,pictureBox6,pictureBox41
                 };
-            int[] syntax = { 0, 7, 8, 15, 16, 23, 24, 31, 32, 39, 40, 47 };
+
 
             for (int i = 0; i < pics.Count() - 1; i++)
             {
-                int randomNumber = random.Next(0, 44);
+                int randomNumber = random.Next(0, 85);
 
                 if (syntax.Contains(i))
                 {
@@ -209,13 +212,15 @@ namespace NDP_Proje
                                         i = jok_result.Item2;
                                         break;
                                     case "item_bomba.png":
+                                        bomba(i+1);
                                         //Console.WriteLine("Bomba");
                                         break;
                                     case "item_gokkusagi.png":
-                                        //Console.WriteLine("Gökkuşağı");
+                                        gokkusagi();
                                         break;
                                     case "item_helicopter.png":
                                         //Console.WriteLine("Helicopter");
+                                        kopter(i+1);
                                         break;
 
                                     default:
@@ -227,7 +232,7 @@ namespace NDP_Proje
                                     {
                                         case "item_dikey_roket.png":
                                             //Console.WriteLine("Dikey Roket");
-                                            dikey_roket(i - per_count - 1);
+                                            dikey_roket(i - per_count);
                                             break;
                                         case "item_yatay_roket.png":
                                             var jok_result = yatay_roket(i);
@@ -235,13 +240,15 @@ namespace NDP_Proje
                                             i = jok_result.Item2;
                                             break;
                                         case "item_bomba.png":
+                                            bomba(i-per_count);
                                             //Console.WriteLine("Bomba");
                                             break;
                                         case "item_gokkusagi.png":
-                                            //Console.WriteLine("Gökkuşağı");
+                                            gokkusagi();
                                             break;
                                         case "item_helicopter.png":
                                             //Console.WriteLine("Helicopter");
+                                            kopter(i-per_count);
                                             break;
 
                                         default:
@@ -350,9 +357,9 @@ namespace NDP_Proje
                                 }
                                 else
                                 {
-                                    Console.WriteLine("|||Dikey Kontrol|||");
                                     if (jokers.Contains((pics[k + 8].Tag)))
                                     {
+                                        Console.WriteLine("|||Dikey Kontrol|||");
                                         switch (pics[k + 8].Tag)
                                         {
                                             case "item_dikey_roket.png":
@@ -364,10 +371,13 @@ namespace NDP_Proje
                                                 k = jok_result.Item2;
                                                 break;
                                             case "item_bomba.png":
+                                                bomba(k+8);
                                                 break;
                                             case "item_gokkusagi.png":
+                                                gokkusagi();
                                                 break;
                                             case "item_helicopter.png":
+                                                kopter(k+8);
                                                 break;
                                             default:
                                                 break;
@@ -387,10 +397,13 @@ namespace NDP_Proje
                                                 k = jok_result.Item2;
                                                 break;
                                             case "item_bomba.png":
+                                                bomba(k-8);
                                                 break;
                                             case "item_gokkusagi.png":
+                                                gokkusagi();
                                                 break;
                                             case "item_helicopter.png":
+                                                kopter(k-8);
                                                 break;
                                             default:
                                                 break;
@@ -411,10 +424,13 @@ namespace NDP_Proje
                                                 k = jok_result.Item2;
                                                 break;
                                             case "item_bomba.png":
+                                                bomba(k+1);
                                                 break;
                                             case "item_gokkusagi.png":
+                                                gokkusagi();
                                                 break;
                                             case "item_helicopter.png":
+                                                kopter(k+1);
                                                 break;
                                             default:
                                                 break;
@@ -435,10 +451,13 @@ namespace NDP_Proje
                                                 k = jok_result.Item2;
                                                 break;
                                             case "item_bomba.png":
+                                                bomba(k-1);
                                                 break;
                                             case "item_gokkusagi.png":
+                                                gokkusagi();
                                                 break;
                                             case "item_helicopter.png":
+                                                kopter(k-1);
                                                 break;
                                             default:
                                                 break;
@@ -508,7 +527,7 @@ namespace NDP_Proje
         {       // pics.Count() = 48;
             int start_of_dikey_rocket = (i % 8) + 1; // 4
             Console.WriteLine("Dikey Roket");
-            for (int j = (i % 8) + 1; j < pics.Count(); j += 8)
+            for (int j = (i % 8); j < pics.Count(); j += 8)
             {
                 if ((pics[j].AccessibleName == "NewLineUp") || (pics[j].AccessibleName == "End"))
                 {
@@ -524,6 +543,386 @@ namespace NDP_Proje
             DeleteSugars();
         }
 
+
+        private void bomba(int i)
+        {
+
+            Console.WriteLine("Bomba");
+            if (syntax.Contains(i - 1) && i - 8 < 0)
+            {
+                var result_CreateImage = CreateSugarImage();
+
+                Image _Image = result_CreateImage.Item1;
+                String _Tag = result_CreateImage.Item2;
+                pics[i].BackgroundImage = _Image;
+                pics[i].Tag = _Tag;
+
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i + 8].BackgroundImage = _Image;
+                pics[i + 8].Tag = _Tag;
+
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i + 1].BackgroundImage = _Image;
+                pics[i + 1].Tag = _Tag;
+
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i + 9].BackgroundImage = _Image;
+                pics[i + 9].Tag = _Tag;
+
+            }
+            else if (syntax.Contains(i - 1) && i+8<47)
+            {
+                var result_CreateImage = CreateSugarImage();
+
+                Image _Image = result_CreateImage.Item1;
+                String _Tag = result_CreateImage.Item2;
+                pics[i].BackgroundImage = _Image;
+                pics[i].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i + 8].BackgroundImage = _Image;
+                pics[i + 8].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i - 8].BackgroundImage = _Image;
+                pics[i - 8].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i - 7].BackgroundImage = _Image;
+                pics[i - 7].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i + 1].BackgroundImage = _Image;
+                pics[i + 1].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i + 9].BackgroundImage = _Image;
+                pics[i + 9].Tag = _Tag;
+            }
+            else if (syntax.Contains(i + 1) && i - 8 < 0)
+            {
+                var result_CreateImage = CreateSugarImage();
+
+                Image _Image = result_CreateImage.Item1;
+                String _Tag = result_CreateImage.Item2;
+                pics[i].BackgroundImage = _Image;
+                pics[i].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i - 1].BackgroundImage = _Image;
+                pics[i - 1].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i + 7].BackgroundImage = _Image;
+                pics[i + 7].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i + 8].BackgroundImage = _Image;
+                pics[i + 8].Tag = _Tag;
+            }
+            else if (syntax.Contains(i + 1))
+            {
+                var result_CreateImage = CreateSugarImage();
+
+                Image _Image = result_CreateImage.Item1;
+                String _Tag = result_CreateImage.Item2;
+                pics[i].BackgroundImage = _Image;
+                pics[i].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i - 8].BackgroundImage = _Image;
+                pics[i - 8].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i - 9].BackgroundImage = _Image;
+                pics[i - 9].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i - 1].BackgroundImage = _Image;
+                pics[i - 1].Tag = _Tag;
+
+                //result_CreateImage = CreateSugarImage();
+                //_Image = result_CreateImage.Item1;
+                //_Tag = result_CreateImage.Item2;
+                //pics[i + 7].BackgroundImage = _Image;
+                //pics[i + 7].Tag = _Tag;
+
+                //result_CreateImage = CreateSugarImage();
+                //_Image = result_CreateImage.Item1;
+                //_Tag = result_CreateImage.Item2;
+                //pics[i + 8].BackgroundImage = _Image;
+                //pics[i + 8].Tag = _Tag;
+            }
+            else if (syntax.Contains(i - 1) && i + 8 > 47)
+            {
+                var result_CreateImage = CreateSugarImage();
+                Image _Image = result_CreateImage.Item1;
+                String _Tag = result_CreateImage.Item2;
+                pics[i].BackgroundImage = _Image;
+                pics[i].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i - 8].BackgroundImage = _Image;
+                pics[i - 8].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i - 7].BackgroundImage = _Image;
+                pics[i - 7].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i + 1].BackgroundImage = _Image;
+                pics[i + 1].Tag = _Tag;
+            }
+            else if (syntax.Contains(i + 1) && i + 8 > 47)
+            {
+                var result_CreateImage = CreateSugarImage();
+
+                Image _Image = result_CreateImage.Item1;
+                String _Tag = result_CreateImage.Item2;
+                pics[i].BackgroundImage = _Image;
+                pics[i].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i - 8].BackgroundImage = _Image;
+                pics[i - 8].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i - 9].BackgroundImage = _Image;
+                pics[i - 9].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i - 1].BackgroundImage = _Image;
+                pics[i - 1].Tag = _Tag;
+            }
+            else if (i + 8 > 47)
+            {
+                var result_CreateImage = CreateSugarImage();
+
+                Image _Image = result_CreateImage.Item1;
+                String _Tag = result_CreateImage.Item2;
+                pics[i].BackgroundImage = _Image;
+                pics[i].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i - 8].BackgroundImage = _Image;
+                pics[i - 8].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i - 9].BackgroundImage = _Image;
+                pics[i - 9].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i - 1].BackgroundImage = _Image;
+                pics[i - 1].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i - 7].BackgroundImage = _Image;
+                pics[i - 7].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i + 1].BackgroundImage = _Image;
+                pics[i + 1].Tag = _Tag;
+            }
+            else if (i-8 < 0)
+            {
+                var result_CreateImage = CreateSugarImage();
+
+                Image _Image = result_CreateImage.Item1;
+                String _Tag = result_CreateImage.Item2;
+                pics[i].BackgroundImage = _Image;
+                pics[i].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i - 1].BackgroundImage = _Image;
+                pics[i - 1].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i +1].BackgroundImage = _Image;
+                pics[i +1].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i + 7].BackgroundImage = _Image;
+                pics[i + 7].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i + 8].BackgroundImage = _Image;
+                pics[i + 8].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i + 9].BackgroundImage = _Image;
+                pics[i + 9].Tag = _Tag;
+            }
+            else
+            {
+                var result_CreateImage = CreateSugarImage();
+
+                Image _Image = result_CreateImage.Item1;
+                String _Tag = result_CreateImage.Item2;
+                pics[i].BackgroundImage = _Image;
+                pics[i].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i - 8].BackgroundImage = _Image;
+                pics[i - 8].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i - 9].BackgroundImage = _Image;
+                pics[i - 9].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i - 1].BackgroundImage = _Image;
+                pics[i - 1].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i - 7].BackgroundImage = _Image;
+                pics[i - 7].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i + 1].BackgroundImage = _Image;
+                pics[i + 1].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i + 7].BackgroundImage = _Image;
+                pics[i + 7].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i + 8].BackgroundImage = _Image;
+                pics[i + 8].Tag = _Tag;
+
+                result_CreateImage = CreateSugarImage();
+                _Image = result_CreateImage.Item1;
+                _Tag = result_CreateImage.Item2;
+                pics[i + 9].BackgroundImage = _Image;
+                pics[i + 9].Tag = _Tag;
+
+            }
+        
+        
+        }
+
+        
+        private void gokkusagi()
+        {
+            Console.WriteLine("Gökkuşağı");
+            Random random = new Random();
+
+            int _random = random.Next(0,4);
+            Console.WriteLine("\n\nSilinen RENK:"+_random);
+
+            for (int j = 0; j < pics.Count(); j++)
+            {
+                if (pics[j].Tag == colors[_random])
+                {
+                    var result_CreateImage = CreateSugarImage();
+                    Image _Image = result_CreateImage.Item1;  /* Image.FromFile("D:\\Yazilim\\C#\\NDP_Proje\\imgs\\deleted.png")*/
+                    String _Tag = result_CreateImage.Item2;
+                    pics[j].BackgroundImage = _Image;
+                    pics[j].Tag = _Tag;
+                }
+            }
+
+        }
+
+
+
+        private void kopter(int i)
+        {
+            Console.WriteLine("Kopter");
+            Random random = new Random();
+            int _random = random.Next(0, 47);
+            if (syntax.Contains(_random))
+            {
+                kopter(i);
+            }
+            else
+            {
+                var result_CreateImage = CreateSugarImage();
+                Image _Image = /*result_CreateImage.Item1;*/  Image.FromFile("D:\\Yazilim\\C#\\NDP_Proje\\imgs\\deleted.png");
+                String _Tag = result_CreateImage.Item2;
+                pics[_random].BackgroundImage = _Image;
+                pics[_random].Tag = _Tag;
+                pics[i].BackgroundImage = _Image;
+                pics[i].Tag = _Tag;
+            }
+        }
 
 
         private void SaveSugarPictureBox(string name, Image image, Point location, Size size, object Tag)
@@ -541,8 +940,8 @@ namespace NDP_Proje
         {
             Console.WriteLine("CreateSugarImage");
             Random random = new Random();
-            string[] imgs = { "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_dikey_roket.png", "item_yatay_roket.png", "item_bomba.png", "item_gokkusagi.png", "item_helicopter.png" };
-            int randomNumber = random.Next(0, 44);
+
+            int randomNumber = random.Next(0, 85);
             return (Image.FromFile($"D:\\Yazilim\\C#\\NDP_Proje\\imgs\\{imgs[randomNumber]}"), imgs[randomNumber]);
 
         }
@@ -563,6 +962,22 @@ namespace NDP_Proje
                 this.type = type;
             }
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine("|||||||||||||||||||||||||||||||");
+            int i = 0;
+
+            while (i.ToString() != textBox1.Text)
+            {
+                Console.WriteLine(pics[i].Tag);
+                Console.WriteLine(textBox1.Text);
+                i++;
+            }
+
+
+            label1.Text = $"pics[i].Tag: {pics[i].Tag}";
         }
     }
 }
