@@ -16,7 +16,10 @@ namespace NDP_Proje
 
     public partial class Game_Page : Form
     {
+        private string username = "";
+        private int point = 0;
         private PictureBox storagePicBox = new PictureBox();  // İlk seçilen şekerin bilgilerini tutmak için kullanıldı.
+        public player player;
         private int select1, select2;                         // select1 : ilk seçilen şekerin kontrolü, select2: ikinci seçilen şekerin kontrolü
         private int per_count = 0;
         private int end_of_per = 0;
@@ -31,7 +34,7 @@ namespace NDP_Proje
 
         public Game_Page()
         {
-
+            player = new player(username, point);
 
 
             Random random = new Random();
@@ -73,7 +76,9 @@ namespace NDP_Proje
             //pictureBox1.BackgroundImage 
 
             DeleteSugars();
-
+            player.Point = 0;
+            Console.WriteLine("Point: " + player.Point);
+            Console.WriteLine("\n\n\n##$$½½\n");
 
         }
 
@@ -99,11 +104,8 @@ namespace NDP_Proje
         {
             if (e.Button == MouseButtons.Left)
             {
-                //Console.WriteLine("Mouse Left Click");
-                //SugarDragDrop(sender);
-                //DoDragDrop(sender, DragDropEffects.Move);
+
                 PictureBox picbox = (PictureBox)sender;
-                //Console.WriteLine(picbox.Name);
 
                 if (select1 == 0)
                 {
@@ -142,20 +144,23 @@ namespace NDP_Proje
                     // Yer değiştirme işlemi bitti 
 
                     DeleteSugars();
+                    Console.WriteLine("Point: " + player.Point);
                     Console.WriteLine("____________________________________________\n");
                     //check_changes();
+                    //Thread.Sleep(500);
 
 
 
                 }
             }
             //Console.WriteLine("$$$$$MOUSE__DOWN$$$$");
+
         }
 
 
         private bool DeleteSugars()
         {
-            Thread.Sleep(100);
+
             Console.WriteLine("DeleteSugars");
             bool basechanged = false;
             string[] jokers = { "item_dikey_roket.png", "item_yatay_roket.png", "item_bomba.png", "item_gokkusagi.png", "item_helicopter.png" };
@@ -205,22 +210,26 @@ namespace NDP_Proje
                                     case "item_dikey_roket.png":
                                         //Console.WriteLine("Dikey Roket");
                                         dikey_roket(i);
+                                        player.Point += 30;
                                         break;
                                     case "item_yatay_roket.png":
                                         var jok_result = yatay_roket(i);
+                                        player.Point += 30;
                                         done = jok_result.Item1;
                                         i = jok_result.Item2;
                                         break;
                                     case "item_bomba.png":
-                                        bomba(i+1);
+                                        bomba(i + 1);
+                                        player.Point += 40;
                                         //Console.WriteLine("Bomba");
                                         break;
                                     case "item_gokkusagi.png":
-                                        gokkusagi();
+                                        player.Point += 5 * gokkusagi();
                                         break;
                                     case "item_helicopter.png":
                                         //Console.WriteLine("Helicopter");
-                                        kopter(i+1);
+                                        kopter(i + 1);
+                                        player.Point += 5;
                                         break;
 
                                     default:
@@ -233,22 +242,26 @@ namespace NDP_Proje
                                         case "item_dikey_roket.png":
                                             //Console.WriteLine("Dikey Roket");
                                             dikey_roket(i - per_count);
+                                            player.Point += 30;
                                             break;
                                         case "item_yatay_roket.png":
                                             var jok_result = yatay_roket(i);
+                                            player.Point += 30;
                                             done = jok_result.Item1;
                                             i = jok_result.Item2;
                                             break;
                                         case "item_bomba.png":
-                                            bomba(i-per_count);
+                                            bomba(i - per_count);
+                                            player.Point += 40;
                                             //Console.WriteLine("Bomba");
                                             break;
                                         case "item_gokkusagi.png":
-                                            gokkusagi();
+                                            player.Point += 5 * gokkusagi();
                                             break;
                                         case "item_helicopter.png":
                                             //Console.WriteLine("Helicopter");
-                                            kopter(i-per_count);
+                                            kopter(i - per_count);
+                                            player.Point += 5;
                                             break;
 
                                         default:
@@ -260,6 +273,7 @@ namespace NDP_Proje
                             //Eğer silindiyse
                             //if (done)
                             //{
+                            player.Point += per_count * 5;
                             for (int j = i; j > i - per_count; j--)
                             {
                                 //changed = true;
@@ -364,20 +378,24 @@ namespace NDP_Proje
                                         {
                                             case "item_dikey_roket.png":
                                                 dikey_roket(k + 8);
+                                                player.Point += 30;
                                                 break;
                                             case "item_yatay_roket.png":
                                                 var jok_result = yatay_roket(k + 8);
+                                                player.Point += 30;
                                                 done = jok_result.Item1;
                                                 k = jok_result.Item2;
                                                 break;
                                             case "item_bomba.png":
-                                                bomba(k+8);
+                                                bomba(k + 8);
+                                                player.Point += 40;
                                                 break;
                                             case "item_gokkusagi.png":
-                                                gokkusagi();
+                                                player.Point += 5 * gokkusagi();
                                                 break;
                                             case "item_helicopter.png":
-                                                kopter(k+8);
+                                                kopter(k + 8);
+                                                player.Point += 5;
                                                 break;
                                             default:
                                                 break;
@@ -390,20 +408,24 @@ namespace NDP_Proje
 
                                             case "item_dikey_roket.png":
                                                 dikey_roket(k - 8);
+                                                player.Point += 30;
                                                 break;
                                             case "item_yatay_roket.png":
                                                 var jok_result = yatay_roket(k - 8);
+                                                player.Point += 30;
                                                 done = jok_result.Item1;
                                                 k = jok_result.Item2;
                                                 break;
                                             case "item_bomba.png":
-                                                bomba(k-8);
+                                                bomba(k - 8);
+                                                player.Point += 40;
                                                 break;
                                             case "item_gokkusagi.png":
-                                                gokkusagi();
+                                                player.Point += 5 * gokkusagi();
                                                 break;
                                             case "item_helicopter.png":
-                                                kopter(k-8);
+                                                kopter(k - 8);
+                                                player.Point += 5;
                                                 break;
                                             default:
                                                 break;
@@ -417,20 +439,24 @@ namespace NDP_Proje
 
                                             case "item_dikey_roket.png":
                                                 dikey_roket(k + 1);
+                                                player.Point += 30;
                                                 break;
                                             case "item_yatay_roket.png":
                                                 var jok_result = yatay_roket(k + 1);
+                                                player.Point += 30;
                                                 done = jok_result.Item1;
                                                 k = jok_result.Item2;
                                                 break;
                                             case "item_bomba.png":
-                                                bomba(k+1);
+                                                bomba(k + 1);
+                                                player.Point += 40;
                                                 break;
                                             case "item_gokkusagi.png":
-                                                gokkusagi();
+                                                player.Point += 5 * gokkusagi();
                                                 break;
                                             case "item_helicopter.png":
-                                                kopter(k+1);
+                                                kopter(k + 1);
+                                                player.Point += 5;
                                                 break;
                                             default:
                                                 break;
@@ -444,20 +470,24 @@ namespace NDP_Proje
 
                                             case "item_dikey_roket.png":
                                                 dikey_roket(k - 1);
+                                                player.Point += 30;
                                                 break;
                                             case "item_yatay_roket.png":
                                                 var jok_result = yatay_roket(k - 1);
+                                                player.Point += 30;
                                                 done = jok_result.Item1;
                                                 k = jok_result.Item2;
                                                 break;
                                             case "item_bomba.png":
-                                                bomba(k-1);
+                                                bomba(k - 1);
+                                                player.Point += 40;
                                                 break;
                                             case "item_gokkusagi.png":
-                                                gokkusagi();
+                                                player.Point += 5 * gokkusagi();
                                                 break;
                                             case "item_helicopter.png":
-                                                kopter(k-1);
+                                                kopter(k - 1);
+                                                player.Point += 5;
                                                 break;
                                             default:
                                                 break;
@@ -472,6 +502,11 @@ namespace NDP_Proje
                                     }
                                 }
                             }
+
+                            player.Point += (per_count / 8) * 5;
+
+
+
                         }
                     }
 
@@ -579,7 +614,7 @@ namespace NDP_Proje
                 pics[i + 9].Tag = _Tag;
 
             }
-            else if (syntax.Contains(i - 1) && i+8<47)
+            else if (syntax.Contains(i - 1) && i + 8 < 47)
             {
                 var result_CreateImage = CreateSugarImage();
 
@@ -777,7 +812,7 @@ namespace NDP_Proje
                 pics[i + 1].BackgroundImage = _Image;
                 pics[i + 1].Tag = _Tag;
             }
-            else if (i-8 < 0)
+            else if (i - 8 < 0)
             {
                 var result_CreateImage = CreateSugarImage();
 
@@ -795,8 +830,8 @@ namespace NDP_Proje
                 result_CreateImage = CreateSugarImage();
                 _Image = result_CreateImage.Item1;
                 _Tag = result_CreateImage.Item2;
-                pics[i +1].BackgroundImage = _Image;
-                pics[i +1].Tag = _Tag;
+                pics[i + 1].BackgroundImage = _Image;
+                pics[i + 1].Tag = _Tag;
 
                 result_CreateImage = CreateSugarImage();
                 _Image = result_CreateImage.Item1;
@@ -874,23 +909,25 @@ namespace NDP_Proje
                 pics[i + 9].Tag = _Tag;
 
             }
-        
-        
+
+
         }
 
-        
-        private void gokkusagi()
+
+        private int gokkusagi()
         {
             Console.WriteLine("Gökkuşağı");
             Random random = new Random();
 
-            int _random = random.Next(0,4);
-            Console.WriteLine("\n\nSilinen RENK:"+_random);
+            int num = 0;
+            int _random = random.Next(0, 4);
+            Console.WriteLine("\n\nSilinen RENK:" + _random);
 
             for (int j = 0; j < pics.Count(); j++)
             {
                 if (pics[j].Tag == colors[_random])
                 {
+                    num++;
                     var result_CreateImage = CreateSugarImage();
                     Image _Image = result_CreateImage.Item1;  /* Image.FromFile("D:\\Yazilim\\C#\\NDP_Proje\\imgs\\deleted.png")*/
                     String _Tag = result_CreateImage.Item2;
@@ -898,6 +935,7 @@ namespace NDP_Proje
                     pics[j].Tag = _Tag;
                 }
             }
+            return num;
 
         }
 
@@ -911,11 +949,13 @@ namespace NDP_Proje
             if (syntax.Contains(_random))
             {
                 kopter(i);
+
+                
             }
             else
             {
                 var result_CreateImage = CreateSugarImage();
-                Image _Image = /*result_CreateImage.Item1;*/  Image.FromFile("D:\\Yazilim\\C#\\NDP_Proje\\imgs\\deleted.png");
+                Image _Image = result_CreateImage.Item1;  /*Image.FromFile("D:\\Yazilim\\C#\\NDP_Proje\\imgs\\deleted.png");*/
                 String _Tag = result_CreateImage.Item2;
                 pics[_random].BackgroundImage = _Image;
                 pics[_random].Tag = _Tag;
@@ -980,4 +1020,41 @@ namespace NDP_Proje
             label1.Text = $"pics[i].Tag: {pics[i].Tag}";
         }
     }
+
+
+
+    public class player
+    {
+        private string username;
+        private int point;
+        public string Username
+        {
+            get
+            {
+                return username;
+            }
+            set
+            {
+
+                username = value;
+            }
+        }
+
+        public int Point
+        {
+            get { return point; }
+            set { point = value; }
+        }
+
+        public player(string username, int point)
+        {
+            this.Username = username;
+            this.point = point;
+
+        }
+
+
+    }
+
+
 }
