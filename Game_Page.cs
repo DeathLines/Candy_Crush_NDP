@@ -99,68 +99,81 @@ namespace NDP_Proje
         }
 
 
-
+        private System.Windows.Forms.Timer animationTimer;
+        private System.Windows.Forms.Timer animationTimer1;
+        private PictureBox firstPic, secondPic;
+        private int animationStep = 0;
         private void SugarMouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-
                 PictureBox picbox = (PictureBox)sender;
 
                 if (select1 == 0)
                 {
                     SaveSugarPictureBox(picbox.Name, picbox.BackgroundImage, picbox.Location, picbox.Size, picbox.Tag);
+                    firstPic = picbox;
                     select1 = 1;
                 }
                 else if (select2 == 0)
                 {
-                    // Yer değiştirme işlmei başladı
-                    foreach (var item in pics)
-                    {
-                        if (item.Name == storagePicBox.Name)
-                        {
-                            //item.Name = picbox.Name;
-                            item.BackgroundImage = picbox.BackgroundImage;
-                            item.Tag = picbox.Tag;
-                            //item.Location = picbox.Location;
-                            //item.Size = picbox.Size;
-                        }
-                    }
-                    foreach (var item in pics)
-                    {
-                        if (item.Name == picbox.Name)
-                        {
-                            //item.Name = storagePicBox.Name;
-                            item.BackgroundImage = storagePicBox.BackgroundImage;
-                            item.Tag = storagePicBox.Tag;
-                            //item.Location = storagePicBox.Location;
-                            //item.Size = storagePicBox.Size;
-                        }
+                    secondPic = picbox;
+                    select2 = 1;
 
-                    }
-                    select1 = 0;
-                    select2 = 0;
-
-                    // Yer değiştirme işlemi bitti 
-
-                    DeleteSugars();
-                    Console.WriteLine("Point: " + player.Point);
-                    Console.WriteLine("____________________________________________\n");
-                    //check_changes();
-                    //Thread.Sleep(500);
-
-
-
+                    // Animasyonu başlat
+                    animationTimer = new System.Windows.Forms.Timer();
+                    animationTimer.Interval = 1000; // Her adım için 100ms
+                    animationTimer.Tick += AnimateSwap;
+                    animationTimer.Start();
                 }
             }
-            //Console.WriteLine("$$$$$MOUSE__DOWN$$$$");
-
         }
+
+        private void AnimateSwap(object sender, EventArgs e)
+        {
+            if (animationStep == 0)
+            {
+                // İlk adım: Şekerlerin yerini değiştir
+                foreach (var item in pics)
+                {
+                    if (item.Name == firstPic.Name)
+                    {
+                        item.BackgroundImage = secondPic.BackgroundImage;
+                        item.Tag = secondPic.Tag;
+                    }
+                }
+                foreach (var item in pics)
+                {
+                    if (item.Name == secondPic.Name)
+                    {
+                        item.BackgroundImage = storagePicBox.BackgroundImage;
+                        item.Tag = storagePicBox.Tag;
+                    }
+                }
+                animationStep++;
+            }
+            else
+            {
+                // Animasyonu durdur ve işlemi tamamla
+                animationTimer.Stop();
+                animationTimer.Dispose();
+                animationStep = 0;
+
+                select1 = 0;
+                select2 = 0;
+
+                // Yer değiştirme sonrası işlemleri yap
+                DeleteSugars();
+                Console.WriteLine("Point: " + player.Point);
+                Console.WriteLine("____________________________________________\n");
+            }
+        }
+
 
 
         private bool DeleteSugars()
         {
-
+            
             Console.WriteLine("DeleteSugars");
             bool basechanged = false;
             string[] jokers = { "item_dikey_roket.png", "item_yatay_roket.png", "item_bomba.png", "item_gokkusagi.png", "item_helicopter.png" };
@@ -950,7 +963,7 @@ namespace NDP_Proje
             {
                 kopter(i);
 
-                
+
             }
             else
             {
