@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Media;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,10 +17,10 @@ namespace NDP_Proje
 
     public partial class Game_Page : Form
     {
+        private Main_Page.player player;
         private string username = "";
         private int point = 0;
         private PictureBox storagePicBox = new PictureBox();  // İlk seçilen şekerin bilgilerini tutmak için kullanıldı.
-        public player player;
         private int select1, select2;                         // select1 : ilk seçilen şekerin kontrolü, select2: ikinci seçilen şekerin kontrolü
         private int per_count = 0;
         private int end_of_per = 0;
@@ -30,16 +31,15 @@ namespace NDP_Proje
         //private bool changed = true;
         private PictureBox[] pics;
         string[] imgs = { "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_mavi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_kirmizi.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_sari.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_yesil.png", "item_dikey_roket.png", "item_yatay_roket.png", "item_bomba.png", "item_gokkusagi.png", "item_helicopter.png" };
+        private int time = 60;
 
-
-        public Game_Page()
+        public Game_Page(Main_Page.player player)
         {
-            player = new player(username, point);
 
 
             Random random = new Random();
             Seker1[] sekerler = new Seker1[36];
-
+            this.player = player;
 
 
             InitializeComponent();
@@ -66,14 +66,9 @@ namespace NDP_Proje
                 pics[i].BackgroundImage = Image.FromFile($"D:\\Yazilim\\C#\\NDP_Proje\\imgs\\{imgs[randomNumber]}");
                 pics[i].Tag = imgs[randomNumber];
                 pics[i].AllowDrop = true;
-                //sekerler[i] = new Seker1(0, 0, "a");
-                //sekerler[i].
+
 
             }
-
-            //Seker1 ab = new Seker1(10, 5, "a");
-            ////Console.WriteLine($"Seker1: x = {ab.x}, y = {ab.x}, type = {ab.type}");
-            //pictureBox1.BackgroundImage 
 
             DeleteSugars();
             player.Point = 0;
@@ -82,20 +77,9 @@ namespace NDP_Proje
 
         }
 
-
-
-        //private void check_changes()
-        //{
-        //    while (changed)
-        //    {
-        //        Console.WriteLine("Değişiklik var");
-        //        changed = DeleteSugars();
-        //    }
-        //}
-
         private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
         {
-
+            //Thread.Sleep(100);
         }
 
 
@@ -107,73 +91,87 @@ namespace NDP_Proje
         {
             if (e.Button == MouseButtons.Left)
             {
+
                 PictureBox picbox = (PictureBox)sender;
 
                 if (select1 == 0)
                 {
                     SaveSugarPictureBox(picbox.Name, picbox.BackgroundImage, picbox.Location, picbox.Size, picbox.Tag);
-                    firstPic = picbox;
                     select1 = 1;
                 }
                 else if (select2 == 0)
                 {
-                    secondPic = picbox;
-                    select2 = 1;
+                    // Yer değiştirme işlmei başladı
+                    foreach (var item in pics)
+                    {
+                        if (item.Name == storagePicBox.Name)
+                        {
+                            //item.Name = picbox.Name;
+                            item.BackgroundImage = picbox.BackgroundImage;
+                            item.Tag = picbox.Tag;
+                            //item.Location = picbox.Location;
+                            //item.Size = picbox.Size;
+                        }
+                    }
+                    foreach (var item in pics)
+                    {
+                        if (item.Name == picbox.Name)
+                        {
+                            //item.Name = storagePicBox.Name;
+                            item.BackgroundImage = storagePicBox.BackgroundImage;
+                            item.Tag = storagePicBox.Tag;
+                            //item.Location = storagePicBox.Location;
+                            //item.Size = storagePicBox.Size;
+                        }
 
-                    // Animasyonu başlat
-                    animationTimer = new System.Windows.Forms.Timer();
-                    animationTimer.Interval = 1000; // Her adım için 100ms
-                    animationTimer.Tick += AnimateSwap;
-                    animationTimer.Start();
+                    }
+                    select1 = 0;
+                    select2 = 0;
+
+                    // Yer değiştirme işlemi bitti 
+
+                    StartDeleteAnimation();
+                    Console.WriteLine("Point: " + player.Point);
+                    label1.Text = player.Point.ToString();
+                    Console.WriteLine("____________________________________________\n");
+                    //check_changes();
+                    //Thread.Sleep(500);
+
+
+
                 }
             }
+            //Console.WriteLine("$$$$$MOUSE__DOWN$$$$");
+
         }
 
-        private void AnimateSwap(object sender, EventArgs e)
+
+        System.Windows.Forms.Timer deleteTimer;
+
+        private void StartDeleteAnimation()
         {
-            if (animationStep == 0)
-            {
-                // İlk adım: Şekerlerin yerini değiştir
-                foreach (var item in pics)
-                {
-                    if (item.Name == firstPic.Name)
-                    {
-                        item.BackgroundImage = secondPic.BackgroundImage;
-                        item.Tag = secondPic.Tag;
-                    }
-                }
-                foreach (var item in pics)
-                {
-                    if (item.Name == secondPic.Name)
-                    {
-                        item.BackgroundImage = storagePicBox.BackgroundImage;
-                        item.Tag = storagePicBox.Tag;
-                    }
-                }
-                animationStep++;
-            }
-            else
-            {
-                // Animasyonu durdur ve işlemi tamamla
-                animationTimer.Stop();
-                animationTimer.Dispose();
-                animationStep = 0;
-
-                select1 = 0;
-                select2 = 0;
-
-                // Yer değiştirme sonrası işlemleri yap
-                DeleteSugars();
-                Console.WriteLine("Point: " + player.Point);
-                Console.WriteLine("____________________________________________\n");
-            }
+            deleteTimer = new System.Windows.Forms.Timer();
+            deleteTimer.Interval = 2000; // Her adım için 300ms
+            deleteTimer.Tick += DeleteAnimationStep;
+            deleteTimer.Start();
         }
+
+        private void DeleteAnimationStep(object sender, EventArgs e)
+        {
+
+
+
+            DeleteSugars();
+            deleteTimer.Stop();
+            deleteTimer.Dispose();
+        }
+
 
 
 
         private bool DeleteSugars()
         {
-            
+
             Console.WriteLine("DeleteSugars");
             bool basechanged = false;
             string[] jokers = { "item_dikey_roket.png", "item_yatay_roket.png", "item_bomba.png", "item_gokkusagi.png", "item_helicopter.png" };
@@ -181,8 +179,6 @@ namespace NDP_Proje
             // YATAY YOK EDİŞ
             for (int i = 0; i < pics.Count() - 1; i++)  // Bütün satırları gez
             {
-                ////Console.WriteLine($"AccName: {pics[i].AccessibleName}");
-                ////Console.WriteLine($"########\npic[i]: {pics[i]}\npics[i].AccessibleName: {pics[i].AccessibleName}\npics[i].Tag: {pics[i].Tag}\n#########");
 
                 // Eğer format picboxuna geldiyse geç
                 if ((pics[i].AccessibleName == "Newline") || (pics[i].AccessibleName == "NewlineUp"))
@@ -196,7 +192,6 @@ namespace NDP_Proje
                     //Console.WriteLine("i Aşımı");
                     continue;
                 }
-
                 else
                 {
                     // Eğer iki şeker birbirine eşitse
@@ -535,7 +530,7 @@ namespace NDP_Proje
             if (basechanged)
             {
                 Console.WriteLine("BaseChanged");
-                DeleteSugars();
+                StartDeleteAnimation();
             }
             return basechanged;
         }
@@ -566,7 +561,7 @@ namespace NDP_Proje
             }
 
 
-            DeleteSugars();
+            StartDeleteAnimation();
             return (false, new_i);
 
         }
@@ -588,7 +583,7 @@ namespace NDP_Proje
                 pics[j].Tag = _Tag;
 
             }
-            DeleteSugars();
+            StartDeleteAnimation();
         }
 
 
@@ -1001,6 +996,8 @@ namespace NDP_Proje
 
 
 
+
+
         public class Seker1
         {
             public int x;
@@ -1017,57 +1014,69 @@ namespace NDP_Proje
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void timer1_Tick(object sender, EventArgs e)
         {
-            Console.WriteLine("|||||||||||||||||||||||||||||||");
-            int i = 0;
-
-            while (i.ToString() != textBox1.Text)
+            label3.Text = time.ToString();  
+            if (time == 0)
             {
-                Console.WriteLine(pics[i].Tag);
-                Console.WriteLine(textBox1.Text);
-                i++;
+                timer1.Stop();
+                MessageBox.Show("Süreniz doldu. Oyun bitti.");
+                this.Close();
             }
-
-
-            label1.Text = $"pics[i].Tag: {pics[i].Tag}";
+            time--;
         }
+
+        //private void button1_Click(object sender, EventArgs e)
+        //{
+        //    Console.WriteLine("|||||||||||||||||||||||||||||||");
+        //    int i = 0;
+
+        //    while (i.ToString() != textBox1.Text)
+        //    {
+        //        Console.WriteLine(pics[i].Tag);
+        //        Console.WriteLine(textBox1.Text);
+        //        i++;
+        //    }
+
+
+        //    skor.Text = $"pics[i].Tag: {pics[i].Tag}";
+        //}
     }
 
 
 
-    public class player
-    {
-        private string username;
-        private int point;
-        public string Username
-        {
-            get
-            {
-                return username;
-            }
-            set
-            {
+    //public class player
+    //{
+    //    private string username;
+    //    private int point;
+    //    public string Username
+    //    {
+    //        get
+    //        {
+    //            return username;
+    //        }
+    //        set
+    //        {
 
-                username = value;
-            }
-        }
+    //            username = value;
+    //        }
+    //    }
 
-        public int Point
-        {
-            get { return point; }
-            set { point = value; }
-        }
+    //    public int Point
+    //    {
+    //        get { return point; }
+    //        set { point = value; }
+    //    }
 
-        public player(string username, int point)
-        {
-            this.Username = username;
-            this.point = point;
+    //    public player(string username, int point)
+    //    {
+    //        this.Username = username;
+    //        this.point = point;
 
-        }
+    //    }
 
 
-    }
+    //}
 
 
 }
