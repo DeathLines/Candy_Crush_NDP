@@ -25,7 +25,7 @@ namespace NDP_Proje
         private int per_count = 0;
         private int end_of_per = 0;
         private int start_of_per = 0;
-        private bool done;
+        //private bool done;
         public int[] syntax = { 0, 7, 8, 15, 16, 23, 24, 31, 32, 39, 40, 47 };
         private string[] colors = { "item_mavi.png", "item_kirmizi.png", "item_sari.png", "item_yesil.png" };
         //private bool changed = true;
@@ -38,7 +38,6 @@ namespace NDP_Proje
 
 
             Random random = new Random();
-            Seker1[] sekerler = new Seker1[36];
             this.player = player;
 
 
@@ -221,10 +220,11 @@ namespace NDP_Proje
                                         player.Point += 30;
                                         break;
                                     case "item_yatay_roket.png":
-                                        var jok_result = yatay_roket(i);
+                                        //var jok_result = yatay_roket(i);
+                                        fill_blanks("item_yatay_roket.png", i);
                                         player.Point += 30;
-                                        done = jok_result.Item1;
-                                        i = jok_result.Item2;
+                                        //done = jok_result.Item1;
+                                        //i = jok_result.Item2;
                                         break;
                                     case "item_bomba.png":
                                         bomba(i + 1);
@@ -253,10 +253,11 @@ namespace NDP_Proje
                                             player.Point += 30;
                                             break;
                                         case "item_yatay_roket.png":
-                                            var jok_result = yatay_roket(i);
+                                            //var jok_result = yatay_roket(i);
+                                            fill_blanks("item_yatay_roket.png", i);
                                             player.Point += 30;
-                                            done = jok_result.Item1;
-                                            i = jok_result.Item2;
+                                            //done = jok_result.Item1;
+                                            //i = jok_result.Item2;
                                             break;
                                         case "item_bomba.png":
                                             bomba(i - per_count);
@@ -278,9 +279,6 @@ namespace NDP_Proje
                                 }
                             }
 
-                            //Eğer silindiyse
-                            //if (done)
-                            //{
                             player.Point += per_count * 5;
                             for (int j = i; j > i - per_count; j--)
                             {
@@ -297,29 +295,11 @@ namespace NDP_Proje
                                 pics[j].BackgroundImage = _Image;
                                 pics[j].Tag = _Tag;
 
-
                             }
                         }
-                        //}
-
-                        //else
-                        //{
-                        //    changed = false;
-                        //}
-
-                        done = true;
+                        //done = true;
                     }
-                    else
-                    {
-                        //changed = false;
-                    }
-
-                    //else
-
-                    //Console.WriteLine($"@@pics[i].Tag: {pics[i].Tag}");
-                    //Console.WriteLine($"@@pics[i+1].Tag: {pics[i + 1].Tag}");
                 }
-                //Console.WriteLine(per_count);
                 per_count = 0;
             }
 
@@ -389,10 +369,11 @@ namespace NDP_Proje
                                                 player.Point += 30;
                                                 break;
                                             case "item_yatay_roket.png":
-                                                var jok_result = yatay_roket(k + 8);
+                                                //var jok_result = yatay_roket(k + 8);
+                                                fill_blanks("item_yatay_roket.png", k + 8);
                                                 player.Point += 30;
-                                                done = jok_result.Item1;
-                                                k = jok_result.Item2;
+                                                //done = jok_result.Item1;
+                                                //k = jok_result.Item2;
                                                 break;
                                             case "item_bomba.png":
                                                 bomba(k + 8);
@@ -419,10 +400,11 @@ namespace NDP_Proje
                                                 player.Point += 30;
                                                 break;
                                             case "item_yatay_roket.png":
-                                                var jok_result = yatay_roket(k - 8);
+                                                //var jok_result = yatay_roket(k - 8);
+                                                fill_blanks("item_yatay_roket.png", k - 8);
                                                 player.Point += 30;
-                                                done = jok_result.Item1;
-                                                k = jok_result.Item2;
+                                                //done = jok_result.Item1;
+                                                //k = jok_result.Item2;
                                                 break;
                                             case "item_bomba.png":
                                                 bomba(k - 8);
@@ -450,10 +432,11 @@ namespace NDP_Proje
                                                 player.Point += 30;
                                                 break;
                                             case "item_yatay_roket.png":
-                                                var jok_result = yatay_roket(k + 1);
+                                                //var jok_result = yatay_roket(k + 1);
+                                                fill_blanks("item_yatay_roket.png", k + 1);
                                                 player.Point += 30;
-                                                done = jok_result.Item1;
-                                                k = jok_result.Item2;
+                                                //done = jok_result.Item1;
+                                                //k = jok_result.Item2;
                                                 break;
                                             case "item_bomba.png":
                                                 bomba(k + 1);
@@ -481,10 +464,11 @@ namespace NDP_Proje
                                                 player.Point += 30;
                                                 break;
                                             case "item_yatay_roket.png":
-                                                var jok_result = yatay_roket(k - 1);
+                                                //var jok_result = yatay_roket(k - 1);
+                                                fill_blanks("item_yatay_roket.png", k - 1);
                                                 player.Point += 30;
-                                                done = jok_result.Item1;
-                                                k = jok_result.Item2;
+                                                //done = jok_result.Item1;
+                                                //k = jok_result.Item2;
                                                 break;
                                             case "item_bomba.png":
                                                 bomba(k - 1);
@@ -627,6 +611,7 @@ namespace NDP_Proje
                 var result_CreateImage = CreateSugarImage();
 
                 Image _Image = result_CreateImage.Item1;
+                //Image.FromFile("D:\\Yazilim\\C#\\NDP_Proje\\imgs\\deleted.png");    
                 String _Tag = result_CreateImage.Item2;
                 pics[i].BackgroundImage = _Image;
                 pics[i].Tag = _Tag;
@@ -995,28 +980,9 @@ namespace NDP_Proje
         }
 
 
-
-
-
-        public class Seker1
-        {
-            public int x;
-            public int y;
-            public string type;
-
-
-            public Seker1(int x, int y, string type)
-            {
-                this.x = x;
-                this.y = y;
-                this.type = type;
-            }
-
-        }
-
         private void timer1_Tick(object sender, EventArgs e)
         {
-            label3.Text = time.ToString();  
+            label3.Text = time.ToString();
             if (time == 0)
             {
                 timer1.Stop();
@@ -1026,57 +992,56 @@ namespace NDP_Proje
             time--;
         }
 
-        //private void button1_Click(object sender, EventArgs e)
-        //{
-        //    Console.WriteLine("|||||||||||||||||||||||||||||||");
-        //    int i = 0;
 
-        //    while (i.ToString() != textBox1.Text)
-        //    {
-        //        Console.WriteLine(pics[i].Tag);
-        //        Console.WriteLine(textBox1.Text);
-        //        i++;
-        //    }
+        private void fill_blanks(string joker, int i)
+        {
+            if (joker == "dikey_roket.png")
+            {
+
+            }
+            else if (joker == "item_yatay_roket.png")
+            {
+                while (!syntax.Contains(i))
+                {
+                    i--;
+                }
+                i++;
+                for (int j = i; j < i + 6; j++)
+                {
+                    int k = j;
+                    while (k - 8 > 0)
+                    {
+                        Console.WriteLine("K: " + k + "i: " + i + "___________________________-");
+                        pics[k].BackgroundImage = pics[k - 8].BackgroundImage;
+                        pics[k].Tag = pics[k - 8].Tag;
+                        k -= 8;
+                    }
+                    //j += 8;
+                    var result_CreateImage = CreateSugarImage();
+                    Image _Image = result_CreateImage.Item1;
+                    String _Tag = result_CreateImage.Item2;
+                    pics[k].BackgroundImage = Image.FromFile("D:\\Yazilim\\C#\\NDP_Proje\\imgs\\deleted.png");     /*_Image;*/
+                    pics[k].Tag = _Tag;
+                    Console.WriteLine("j = " + j + "#######\n");
+
+                }
+                Thread.Sleep(1000);
 
 
-        //    skor.Text = $"pics[i].Tag: {pics[i].Tag}";
-        //}
+            }
+            else if (joker == "item_bomba.png")
+            {
+
+
+            }
+            else if (joker == "item_gokkusagi.png")
+            {
+            }
+            else if (joker == "item_helicopter.png")
+            {
+            }
+
+
+        }
     }
-
-
-
-    //public class player
-    //{
-    //    private string username;
-    //    private int point;
-    //    public string Username
-    //    {
-    //        get
-    //        {
-    //            return username;
-    //        }
-    //        set
-    //        {
-
-    //            username = value;
-    //        }
-    //    }
-
-    //    public int Point
-    //    {
-    //        get { return point; }
-    //        set { point = value; }
-    //    }
-
-    //    public player(string username, int point)
-    //    {
-    //        this.Username = username;
-    //        this.point = point;
-
-    //    }
-
-
-    //}
-
-
 }
