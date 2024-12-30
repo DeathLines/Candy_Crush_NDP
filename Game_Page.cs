@@ -240,64 +240,135 @@ namespace NDP_Proje
                         // Eğer 3 lü per oluştuysa 
                         if (per_count >= 3)
                         {
-                            // Eğer joker varsa
-                            if (jokers.Contains(pics[i + 1].Tag) || jokers.Contains(pics[i - per_count].Tag) )
+                           
+                            for (int j = i; j > i - per_count; j--)
                             {
-                                switch (pics[i + 1].Tag)
+                                // Eğer joker varsa
+                                if (jokers.Contains(pics[j + 1].Tag) || jokers.Contains(pics[j - 1].Tag))
                                 {
-                                    case "item_dikey_roket.png":
-                                        //Console.WriteLine("Dikey Roket");
-                                        dikey_roket(i);
-                                        player.Point += 30;
-                                        break;
-                                    case "item_yatay_roket.png":
-                                        Console.WriteLine("\nYattart?????");
-                                        var jok_result = yatay_roket(i);
-                                        player.Point += 30;
-                                        i = jok_result.Item2;
-                                        break;
-                                    case "item_bomba.png":
-                                        bomba(i + 1);
-                                        player.Point += 40;
-                                        //Console.WriteLine("Bomba");
-                                        break;
-                                    case "item_gokkusagi.png":
-                                        player.Point += 5 * gokkusagi(i + 1);
-                                        break;
-                                    case "item_helicopter.png":
-                                        //Console.WriteLine("Helicopter");
-                                        kopter(i + 1);
-                                        player.Point += 5;
-                                        break;
-
-                                    default:
-                                        break;
-                                }
-                                if ((i - per_count) > 0)
-                                {
-                                    switch (pics[i - per_count].Tag)
+                                    switch (pics[j + 1].Tag)
                                     {
                                         case "item_dikey_roket.png":
                                             //Console.WriteLine("Dikey Roket");
-                                            dikey_roket(i - per_count);
+                                            dikey_roket(j + 1);
                                             player.Point += 30;
                                             break;
                                         case "item_yatay_roket.png":
-                                            var jok_result = yatay_roket(i);
+                                            Console.WriteLine("\nYattart?????");
+                                            var jok_result = yatay_roket(j+1);
                                             player.Point += 30;
                                             i = jok_result.Item2;
                                             break;
                                         case "item_bomba.png":
-                                            bomba(i - per_count);
+                                            bomba(j + 1);
                                             player.Point += 40;
                                             //Console.WriteLine("Bomba");
                                             break;
                                         case "item_gokkusagi.png":
-                                            player.Point += 5 * gokkusagi(i - per_count);
+                                            player.Point += 5 * gokkusagi(j + 1);
                                             break;
                                         case "item_helicopter.png":
                                             //Console.WriteLine("Helicopter");
-                                            kopter(i - per_count);
+                                            kopter(j + 1);
+                                            player.Point += 5;
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                    if ((j - 1) > 0)
+                                    {
+                                        switch (pics[j - 1].Tag)
+                                        {
+                                            case "item_dikey_roket.png":
+                                                //Console.WriteLine("Dikey Roket");
+                                                dikey_roket(j - 1);
+                                                player.Point += 30;
+                                                break;
+                                            case "item_yatay_roket.png":
+                                                var jok_result = yatay_roket(j-1);
+                                                player.Point += 30;
+                                                i = jok_result.Item2;
+                                                break;
+                                            case "item_bomba.png":
+                                                bomba(j - 1);
+                                                player.Point += 40;
+                                                //Console.WriteLine("Bomba");
+                                                break;
+                                            case "item_gokkusagi.png":
+                                                player.Point += 5 * gokkusagi(j - 1);
+                                                break;
+                                            case "item_helicopter.png":
+                                                //Console.WriteLine("Helicopter");
+                                                kopter(j - 1);
+                                                player.Point += 5;
+                                                break;
+
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                }
+
+                                else if (j + 8 < 47 && (jokers.Contains(pics[j + 8].Tag)))
+                                {
+                                    switch (pics[j + 8].Tag)
+                                    {
+                                        case "item_dikey_roket.png":
+                                            //Console.WriteLine("Dikey Roket");
+                                            dikey_roket(j + 8);
+                                            player.Point += 30;
+                                            break;
+                                        case "item_yatay_roket.png":
+                                            Console.WriteLine("\nYattart?????");
+                                            var jok_result = yatay_roket(j+8);
+                                            player.Point += 30;
+                                            i = jok_result.Item2;
+                                            break;
+                                        case "item_bomba.png":
+                                            bomba(j + 8);
+                                            player.Point += 40;
+                                            //Console.WriteLine("Bomba");
+                                            break;
+                                        case "item_gokkusagi.png":
+                                            player.Point += 5 * gokkusagi(j + 8);
+                                            break;
+                                        case "item_helicopter.png":
+                                            //Console.WriteLine("Helicopter");
+                                            kopter(j + 8);
+                                            player.Point += 5;
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                }
+                                else if (j - 8 > 0 && (jokers.Contains(pics[j - 8].Tag)))
+                                {
+                                    switch (pics[j -8].Tag)
+                                    {
+                                        case "item_dikey_roket.png":
+                                            //Console.WriteLine("Dikey Roket");
+                                            dikey_roket(j -8);
+                                            player.Point += 30;
+                                            break;
+                                        case "item_yatay_roket.png":
+                                            Console.WriteLine("\nYattart?????");
+                                            var jok_result = yatay_roket(j-8);
+                                            player.Point += 30;
+                                            i = jok_result.Item2;
+                                            break;
+                                        case "item_bomba.png":
+                                            bomba(j -8);
+                                            player.Point += 40;
+                                            //Console.WriteLine("Bomba");
+                                            break;
+                                        case "item_gokkusagi.png":
+                                            player.Point += 5 * gokkusagi(j -8);
+                                            break;
+                                        case "item_helicopter.png":
+                                            //Console.WriteLine("Helicopter");
+                                            kopter(j -8);
                                             player.Point += 5;
                                             break;
 
@@ -306,7 +377,6 @@ namespace NDP_Proje
                                     }
                                 }
                             }
-
                             player.Point += per_count * 5;
                             for (int j = i; j > i - per_count; j--)
                             {
@@ -361,15 +431,18 @@ namespace NDP_Proje
                             if ((j + 8) > pics.Count()) break;
                         }
                         if (per_count >= 24)
-                        {                       //NEGATİF OLUYOR PER COUNT J DEN HEP 5 DAHA BÜYÜK ÇIKIYOR
+                        {               
+
+                            //NEGATİF OLUYOR PER COUNT J DEN HEP 5 DAHA BÜYÜK ÇIKIYOR
                             for (int k = end_of_per; k >= start_of_per; k -= 8)
                             {
                                 //changed = true;
                                 basechanged = true;
-                                if ((pics[k].AccessibleName == "NewLineUp") || (pics[k].AccessibleName == "End"))
-                                {
-                                    continue;
-                                }
+                                //if ((pics[k].AccessibleName == "NewLineUp") || (pics[k].AccessibleName == "End"))
+                                //{
+                                //    Console.WriteLine("DİKEY KONTROL NEWLİNEUP**************************************************");
+                                //    continue;
+                                //}
                                 // Silinen şekerlerin yerine yeni şekerler ekleniyor
                                 var result_CreateImage = CreateSugarImage();
                                 Image _Image = result_CreateImage.Item1;
