@@ -70,7 +70,7 @@ namespace NDP_Proje
 
 
             }
-
+            Console.WriteLine("GamePage!!!!!");
             DeleteSugars();
             player.Point = 0;
             Console.WriteLine("Point: " + player.Point);
@@ -90,6 +90,7 @@ namespace NDP_Proje
         private int animationStep = 0;
         private void SugarMouseDown(object sender, MouseEventArgs e)
         {
+
             if (e.Button == MouseButtons.Left)
             {
 
@@ -107,26 +108,50 @@ namespace NDP_Proje
                 }
                 else if (select2 == 0)
                 {
-                    // Yer değiştirme işlmei başladı
-                    foreach (var item in pics)
+                    bool x_changed = false;
+                    bool y_changed = false;
+                    Console.WriteLine(storagePicBox.Location.X - picbox.Location.X);
+                    if (storagePicBox.Location.X - picbox.Location.X != 0)
                     {
-                        if (item.Name == storagePicBox.Name)
+                        x_changed = true;
+                    }
+                    if (storagePicBox.Location.Y - picbox.Location.Y != 0)
+                    {
+                        y_changed = true;
+                    }
+
+                    if (((storagePicBox.Location.X - picbox.Location.X > 0) && (storagePicBox.Location.X - picbox.Location.X < 90) && !y_changed) || ((storagePicBox.Location.X - picbox.Location.X < 0) && (storagePicBox.Location.X - picbox.Location.X > -90) && !y_changed) || ((storagePicBox.Location.Y - picbox.Location.Y > 0) && (storagePicBox.Location.Y - picbox.Location.Y < 90) && !x_changed) || ((storagePicBox.Location.Y - picbox.Location.Y < 0) && (storagePicBox.Location.Y - picbox.Location.Y > -90) && !x_changed))
+                    {
+
+                        // Yer değiştirme işlmei başladı
+                        foreach (var item in pics)
                         {
-                            item.BackgroundImage = picbox.BackgroundImage;
-                            item.Tag = picbox.Tag;
+                            if (item.Name == storagePicBox.Name)
+                            {
+                                item.BackgroundImage = picbox.BackgroundImage;
+                                item.Tag = picbox.Tag;
+                            }
+                        }
+                        foreach (var item in pics)
+                        {
+                            if (item.Name == picbox.Name)
+                            {
+                                item.BackgroundImage = storagePicBox.BackgroundImage;
+                                item.Tag = storagePicBox.Tag;
+                            }
+
                         }
                     }
-                    foreach (var item in pics)
+                    else
                     {
-                        if (item.Name == picbox.Name)
-                        {
-                            item.BackgroundImage = storagePicBox.BackgroundImage;
-                            item.Tag = storagePicBox.Tag;
-                        }
-
+                        Console.WriteLine("İşlem yapılamaz");
+                        x_changed = false;
+                        y_changed = false;
                     }
                     select1 = 0;
                     select2 = 0;
+                    x_changed = false;
+                    y_changed = false;
 
                     // Yer değiştirme işlemi bitti 
 
@@ -163,7 +188,7 @@ namespace NDP_Proje
             if (first_start)
             {
                 player.Point = 0;
-                first_start = false;
+                //first_start = false;
             }
             label1.Text = player.Point.ToString();
             DeleteSugars();
@@ -216,7 +241,7 @@ namespace NDP_Proje
                         if (per_count >= 3)
                         {
                             // Eğer joker varsa
-                            if (jokers.Contains(pics[i + 1].Tag) || jokers.Contains(pics[i - per_count].Tag))
+                            if (jokers.Contains(pics[i + 1].Tag) || jokers.Contains(pics[i - per_count].Tag) )
                             {
                                 switch (pics[i + 1].Tag)
                                 {
@@ -535,8 +560,8 @@ namespace NDP_Proje
             }
 
 
-            Thread.Sleep(1000);
-            StartDeleteAnimation();
+            //Thread.Sleep(1000);
+            //StartDeleteAnimation();
             return (false, new_i);
 
         }
@@ -558,8 +583,8 @@ namespace NDP_Proje
                 pics[j].Tag = _Tag;
 
             }
-            Thread.Sleep(1000);
-            StartDeleteAnimation();
+            //Thread.Sleep(1000);
+            //StartDeleteAnimation();
         }
 
 
@@ -882,8 +907,8 @@ namespace NDP_Proje
                 pics[i + 9].Tag = _Tag;
 
             }
-            Thread.Sleep(1000);
-            StartDeleteAnimation();
+            //Thread.Sleep(1000);
+            //StartDeleteAnimation();
 
         }
 
@@ -915,8 +940,8 @@ namespace NDP_Proje
                     pics[j].Tag = _Tag;
                 }
             }
-            Thread.Sleep(1000);
-            StartDeleteAnimation();
+            //Thread.Sleep(1000);
+            //StartDeleteAnimation();
             return num;
 
         }
@@ -944,8 +969,8 @@ namespace NDP_Proje
                 pics[i].BackgroundImage = _Image;
                 pics[i].Tag = _Tag;
             }
-            Thread.Sleep(1000);
-            StartDeleteAnimation();
+            //Thread.Sleep(1000);
+            //StartDeleteAnimation();
         }
 
 
@@ -987,7 +1012,7 @@ namespace NDP_Proje
             using (StreamReader sr = new StreamReader(dosyaYolu))
             {
                 string satir;
-                bool placed  = false;
+                bool placed = false;
 
                 //player.Point = 10000;
                 while ((satir = sr.ReadLine()) != null)
@@ -1019,7 +1044,7 @@ namespace NDP_Proje
                         ordered_points.Add(player.Point);
 
                         // Listenin geri kalanını yükle
-                        for (int j = i + 1; j < users.Count() +1; j++)
+                        for (int j = i + 1; j < users.Count() + 1; j++)
                         {
                             Console.WriteLine("\n Geri Kalanı yükleme İşlemi");
                             ordered_user.Add(users[i]);
@@ -1071,8 +1096,6 @@ namespace NDP_Proje
             }
             time--;
         }
-
-
     }
 
 
